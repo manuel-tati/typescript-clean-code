@@ -1,39 +1,8 @@
-import { contacts } from "./data/contacts.mock.data";
+import { Contact } from "./mock/models/contact";
+import MockContactsRepository from "./mock/repositories/mock.contact.repository";
+import CreateContactUseCase from "./mock/use-cases/create.contact.use-case";
 
 describe("CREATE CONTACT", () => {
-  type Contact = {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-  };
-
-  interface IContactsRepository {
-    findAll(): Contact[];
-    save(contact: Contact): void;
-  }
-
-  class MockContactsRepository implements IContactsRepository {
-    save(contact: Contact): void {
-      contacts.push(contact);
-    }
-    findAll(): Contact[] {
-      return contacts;
-    }
-  }
-
-  interface CreateContactUseCase {
-    create(contact: Contact): void;
-  }
-
-  class CreateContact implements CreateContactUseCase {
-    constructor(private repository: IContactsRepository) {}
-    create(contact: Contact): void {
-      this.repository.save(contact);
-    }
-  }
-
   test("Should return 3 as contacts size", () => {
     const newContact: Contact = {
       id: 3,
@@ -43,7 +12,9 @@ describe("CREATE CONTACT", () => {
       phone: "54321",
     };
     const mockContactsRepository = new MockContactsRepository();
-    const createContactUseCase = new CreateContact(mockContactsRepository);
+    const createContactUseCase = new CreateContactUseCase(
+      mockContactsRepository
+    );
     createContactUseCase.create(newContact);
     expect(mockContactsRepository.findAll().length).toEqual(3);
   });

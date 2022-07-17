@@ -1,40 +1,7 @@
-import { contacts } from "./data/contacts.mock.data";
+import MockContactsRepository from "./mock/repositories/mock.contact.repository";
+import { GetAllContactsUseCase } from "./mock/use-cases/get.all.contacts.use-case";
 
 describe("GET ALL CONTACTS USE CASE", () => {
-  type Contacts = {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-  };
-
-  interface IContactsRepository {
-    findAll(): Contacts[];
-    save(contacts: Contacts): void;
-  }
-
-  class MockContactsRepository implements IContactsRepository {
-    save(contacts: Contacts): void {
-      throw new Error("Method not implemented.");
-    }
-    findAll(): Contacts[] {
-      return contacts;
-    }
-  }
-
-  interface GetAllContactsUseCase {
-    findAll(): Contacts[];
-  }
-
-  class GetAllContacts implements GetAllContactsUseCase {
-    constructor(private repository: IContactsRepository) {}
-
-    findAll(): Contacts[] {
-      return this.repository.findAll();
-    }
-  }
-
   test("Should return all contacts", async () => {
     const mockContactsRepository = new MockContactsRepository();
     const expectedData = [
@@ -53,7 +20,7 @@ describe("GET ALL CONTACTS USE CASE", () => {
         phone: "321",
       },
     ];
-    const getAllContacts = new GetAllContacts(mockContactsRepository);
+    const getAllContacts = new GetAllContactsUseCase(mockContactsRepository);
     const result = await getAllContacts.findAll();
     expect(result).toStrictEqual(expectedData);
   });
