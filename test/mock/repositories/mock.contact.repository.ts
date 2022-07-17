@@ -9,6 +9,12 @@ class MockContactsRepository implements IContactsRepository {
   findAll(): Contact[] {
     return contacts;
   }
+  findById(id: number): Contact | undefined {
+    const contact: Contact | undefined = contacts.find(
+      (contact) => contact.id === id
+    );
+    return contact;
+  }
 }
 
 export default MockContactsRepository;

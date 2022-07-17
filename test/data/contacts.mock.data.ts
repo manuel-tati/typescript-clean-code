@@ -1,4 +1,6 @@
-export const contacts = [
+import { Contact } from "../mock/models/contact";
+
+export const contacts: Contact[] = [
   {
     id: 1,
     firstName: "Mazal",
