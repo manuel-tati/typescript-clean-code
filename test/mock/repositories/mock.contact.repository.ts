@@ -15,6 +15,12 @@ class MockContactsRepository implements IContactsRepository {
     );
     return contact;
   }
+  findByEmail(email: string): Contact | undefined {
+    const contact: Contact | undefined = contacts.find(
+      (contact) => contact.email === email
+    );
+    return contact;
+  }
 }
 
 export default MockContactsRepository;

@@ -19,7 +19,25 @@ describe("CREATE CONTACT", () => {
     expect(() => createContactUseCase.create(newContact)).toThrow();
   });
 
-  test("Should return 4 as contacts size", () => {
+  test("Should return error if email already exists", () => {
+    const newContact: Contact = {
+      id: 3,
+      firstName: "Tume",
+      lastName: "Kaillan",
+      email: "mazal@test.com",
+      phone: "54321",
+    };
+    const mockContactsRepository = new MockContactsRepository();
+    const createContactUseCase = new CreateContactUseCase(
+      mockContactsRepository
+    );
+
+    expect(() => createContactUseCase.create(newContact)).toThrow(
+      "There is already a contact with that email"
+    );
+  });
+
+  test("Should return 3 as contacts size", () => {
     const newContact: Contact = {
       id: 3,
       firstName: "Tume",
