@@ -18,7 +18,6 @@ class CreateContactUseCase implements ICreateContactUseCase {
 
   private checkIfEmailAlreadyExists = (email: string, id?: number) => {
     const contact: any = this.repository.findByEmail(email);
-    console.log(contact);
 
     if (contact !== undefined && contact.id !== id) {
       throw new Error("There is already a contact with that email");
