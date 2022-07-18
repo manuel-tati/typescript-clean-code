@@ -7,7 +7,8 @@ export interface Contact {
 }
 
 export class ContactBuilder {
-  constructor(private readonly contact: Contact) {}
+  private readonly contact!: Contact;
+  constructor() {}
 
   id(id: number): ContactBuilder {
     this.contact.id = id;
@@ -32,5 +33,9 @@ export class ContactBuilder {
   phone(phone: string): ContactBuilder {
     this.contact.phone = phone;
     return this;
+  }
+
+  build(): Contact {
+    return this.contact;
   }
 }
